@@ -116,11 +116,13 @@ export default function fruitsList() {
 
     return (
 
-        // Form
-
         <>
 
-            <form onSubmit={handleSubmit}>
+            {/* Form */}
+
+            <h3>Form section</h3>
+
+            <form className="posts-form" onSubmit={handleSubmit}>
 
                 {/* Titolo */}
 
@@ -179,9 +181,11 @@ export default function fruitsList() {
             </form>
 
 
+            <h1>React blog</h1>
+
             {/* Lista post */}
 
-            <ul className="fruit-posts-list">
+            <ul className="fruit-posts">
 
                 {
                     fruitPosts.map((fruit) => (
@@ -196,7 +200,7 @@ export default function fruitsList() {
 
                             {/* Bottone di rimozione del post */}
 
-                            <button onClick={() => removePost(fruit.id)}>
+                            <button className="remove-button" onClick={() => removePost(fruit.id)}>
                                 Elimina Post
                             </button>
 
