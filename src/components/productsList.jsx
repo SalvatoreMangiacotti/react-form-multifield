@@ -89,8 +89,13 @@ export default function fruitsList() {
 
         e.preventDefault();
         setFruitPosts((currentFruitsPosts) => [...currentFruitsPosts,
-        { id: currentFruitsPosts[currentFruitsPosts.length - 1].id + 1, ...formData }])
+        {
+            id:
+                currentFruitsPosts.length === 0 ? 1 : currentFruitsPosts[currentFruitsPosts.length - 1].id + 1,
+            ...formData
+        }])
 
+        setFormData(initialFormData)
     }
 
 
