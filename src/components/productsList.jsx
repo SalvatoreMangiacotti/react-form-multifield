@@ -56,7 +56,7 @@ const initialFormData = {
 
 
 
-export default function fruitsList() {
+export default function FruitsList() {
 
     // State dei Post
 
