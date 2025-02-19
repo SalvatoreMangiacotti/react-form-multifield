@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 const mediterraneanFruits = [
     {
         id: 1,
@@ -44,28 +46,162 @@ const mediterraneanFruits = [
 ];
 
 
+
+const initialFormData = {
+    titolo: "",
+    autore: "",
+    contenuto: "",
+    categoria: ""
+}
+
+
+
 export default function fruitsList() {
+
+    // State dei Post
+
+    const [fruitPosts, setFruitPosts] = useState(mediterraneanFruits)
+
+
+
+    // State del Form
+
+    const [formData, setFormData] = useState(initialFormData)
+
+
+
+    // Funzione del contenuto del Form
+
+    function handleFormData(e) {
+
+        setFormData((currentFormData) => ({
+            ...currentFormData,
+            [e.target.name]: e.target.value
+        }))
+
+    }
+
+
+
+    // Funzione del Submit
+
+    function handleSubmit(e) {
+
+        e.preventDefault();
+        setFruitPosts((currentFruitsPosts) => [...currentFruitsPosts,
+        { id: currentFruitsPosts[currentFruitsPosts.length - 1].id + 1, ...formData }])
+
+    }
+
+
+
+    // Funzione del bottone di rimozione post
+
+    function removePost(id) {
+
+        const updatedPosts = fruitPosts.filter((post) => {
+            return post.id !== id;
+        });
+
+        setFruitPosts(updatedPosts);
+
+    }
+
+
 
     return (
 
-        <ul className="products-list">
+        // Form
 
-            {
-                mediterraneanFruits.map((fruit) => (
+        <>
 
-                    <li key={fruit.id}>
+            <form onSubmit={handleSubmit}>
 
-                        <h2>{fruit.titolo}</h2>
-                        <h3>{fruit.autore}</h3>
-                        <p>{fruit.contenuto}</p>
-                        <span>{fruit.categoria}</span>
+                {/* Titolo */}
 
-                    </li>
-                ))
-            }
+                <input
+                    type="text"
+                    name="titolo"
+                    onChange={handleFormData}
+                    value={formData.titolo}
+                    placeholder='Nome del post'
+                />
 
-        </ul>
 
+                {/* Autore */}
+
+                <input
+                    type="text"
+                    name="autore"
+                    onChange={handleFormData}
+                    value={formData.autore}
+                    placeholder='Nome Autore'
+                />
+
+
+                {/* Contenuto */}
+
+                <textarea
+                    type="text"
+                    name="contenuto"
+                    onChange={handleFormData}
+                    value={formData.contenuto}
+                    placeholder='Contenuto del post'
+                >
+
+                    {/* DEBUG per ricordarmi che text area ha bisogno
+                    di un tag di chiusura,
+                    con Maracas incluse 🪇 */}
+
+                </textarea>
+
+
+                {/* Categoria */}
+
+                <input
+                    type="text"
+                    name="categoria"
+                    onChange={handleFormData}
+                    value={formData.categoria}
+                    placeholder='Categoria del post'
+                />
+
+
+                {/* Bottone del form  */}
+
+                <button>Aggiungi</button>
+
+            </form>
+
+
+            {/* Lista post */}
+
+            <ul className="fruit-posts-list">
+
+                {
+                    fruitPosts.map((fruit) => (
+
+                        <li key={fruit.id}>
+
+                            <h2>{fruit.titolo}</h2>
+                            <h3>{fruit.autore}</h3>
+                            <p>{fruit.contenuto}</p>
+                            <span>{fruit.categoria}</span>
+
+
+                            {/* Bottone di rimozione del post */}
+
+                            <button onClick={() => removePost(fruit.id)}>
+                                Elimina Post
+                            </button>
+
+                        </li>
+                    ))
+                }
+
+            </ul>
+
+        </>
     )
 
 }
